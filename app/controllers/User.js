@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const secretKey = require('../../config/key.config').SECRET_KEY;
 //Handel Error
 const {UserInputError} = require('apollo-server');
+const {validateRegisterInput} = require('../utils/validator');
 
 module.exports = {
     Mutation: {
@@ -12,8 +13,18 @@ module.exports = {
                 signup: { userName, email, password, confirmPassword} //args
                 
             }/*, context, info*/) {
-                
-                const user = User.findOne({userName});
+                const {valid, errors} = validateRegisterInput(
+                    userName,
+                    email,
+                    password,
+                    confirmPassword
+                );
+
+                 if(!valid) {
+                     throw new UserInputError('Errors', {errors});
+                 }   
+
+                const user = await User.findOne({userName});
 
                 if(user) {
                     throw new UserInputError('Username is taken', {
