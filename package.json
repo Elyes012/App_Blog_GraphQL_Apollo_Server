@@ -1,0 +1,18 @@
+{
+  "name": "backend_app_blog_graphql",
+  "version": "1.0.0",
+  "description": "graphQL blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Elyes Maamouri",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.13.0",
+    "bcryptjs": "^2.4.3",
+    "graphql": "^15.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.12"
+  }
+}
