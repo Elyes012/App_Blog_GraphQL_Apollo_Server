@@ -29,5 +29,6 @@ type Query {
 
 type Mutation {
     register(signup: Signup) : User!
+    login(userName: String!, password: String!):User!
 }
 `;

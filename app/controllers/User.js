@@ -1,13 +1,44 @@
 const User = require('../models/User');
 const bycrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const secretKey = require('../../config/key.config').SECRET_KEY;
+const userToken = require('../utils/generateToken')
+
 //Handel Error
 const {UserInputError} = require('apollo-server');
-const {validateRegisterInput} = require('../utils/validator');
+const {validateRegisterInput, validateLoginInput} = require('../utils/validator');
+
+
 
 module.exports = {
     Mutation: {
+        async login(_,{userName, password}) {
+            const {errors, valid} = validateLoginInput(userName, password);
+            const user = await User.findOne({userName});
+
+            if(!valid) {
+                throw new UserInputError('Errors', {errors});
+            }
+
+            if(!user) {
+                errors.general = 'User not found';
+                throw new UserInputError('User not found', {errors});
+            }
+
+            const match = await bycrypt.compare(password, user.password);
+
+            if(!match) {
+                errors.general = 'Wrong credentials';
+                throw new UserInputError('Wrong credentials', {errors});
+            }
+            
+            const token = userToken.defaultToken(user)
+
+            return {
+                ...user._doc,
+                id: user._id,
+                token
+            }
+           
+        },
         async register(_,
             {
                 signup: { userName, email, password, confirmPassword} //args
@@ -42,11 +73,7 @@ module.exports = {
                 });
                 const result = await newUser.save();
 
-                const token = jwt.sign({
-                    id : result.id,
-                    email : result.email,
-                    userName: result.userName
-                },secretKey, {expiresIn : '1h'});
+                const token = userToken.defaultToken(result)
 
                 // Return data in localhost:5000 saved in mongodb
                 return {
