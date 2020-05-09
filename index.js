@@ -7,7 +7,8 @@ const resolvers = require('./app/graphql/resolvers');
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: ({req}) =>({req}) // Middleware
 });
 
 server.listen(portServer)

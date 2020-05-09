@@ -25,10 +25,13 @@ input Signup {
 
 type Query {
   getPosts: [Post]
+  getPost(postId: ID!): Post
 }
 
 type Mutation {
     register(signup: Signup) : User!
     login(userName: String!, password: String!):User!
+    createPost(body: String!): Post!
+    deletePost(postId: ID!): String!
 }
 `;
