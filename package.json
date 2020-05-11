@@ -13,6 +13,7 @@
     "bcryptjs": "^2.4.3",
     "graphql": "^15.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.12"
+    "mongoose": "^5.9.12",
+    "ndb": "^1.1.5"
   }
 }

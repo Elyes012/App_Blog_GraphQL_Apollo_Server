@@ -6,6 +6,21 @@ type Post {
   body: String!
   createdAt: String!
   username: String!
+  comments: [Comment]!
+  likes : [Like]!
+}
+
+type Comment {
+  id : ID!
+  creatAt: String!
+  username: String!
+  body: String!
+}
+
+type Like {
+  id: ID!
+  createAt: String!
+  username: String!
 }
 
 type User {
@@ -33,5 +48,8 @@ type Mutation {
     login(userName: String!, password: String!):User!
     createPost(body: String!): Post!
     deletePost(postId: ID!): String!
+    createComment(postId :String!, body: String!): Post!
+    deleteComment(postId : ID!, commentId: ID!): Post!
+    likePost(postId: ID!): Post!
 }
 `;
