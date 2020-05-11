@@ -10,7 +10,7 @@ const postSchema = new Schema({
   comments: [
     {
       body: String,
-      usernNme: String,
+      username: String,
       createdAt: String
     }
   ],
