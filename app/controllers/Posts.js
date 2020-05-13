@@ -38,13 +38,17 @@ module.exports = {
 
     async createPost(_, { body }, context) {
       const user = checkAuth(context);
-      console.log('user', user)
+      console.log('user', user.userName)
+      if (body.trim() === '') {
+        throw new Error('Post body must be empty')
+      }
+      
       const newPost = new Post({
         body,
         user: user.id,
-        username: user.userName,
+        userName: user.userName,
       });
-
+console.log("newPost",newPost)
       const post = await newPost.save();
 
       return post

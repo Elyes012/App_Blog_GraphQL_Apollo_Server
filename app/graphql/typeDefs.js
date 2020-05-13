@@ -5,14 +5,14 @@ type Post {
   id: ID!
   body: String!
   createdAt: String!
-  username: String!
+  userName: String!
   comments: [Comment]!
   likes : [Like]!
 }
 
 type Comment {
   id : ID!
-  creatAt: String!
+  createdAt: String!
   username: String!
   body: String!
 }

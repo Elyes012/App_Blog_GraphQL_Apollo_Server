@@ -6,7 +6,7 @@ module.exports = {
 
     Mutration: {
         createComment: async (_, { postId, body }, context) => {
-            const {username} = checkAuth(context);
+            const username = checkAuth(context);
 console.log(username)
             if (body.trim() === '') {
                 throw new UserInputError('Empty comment', {
@@ -20,8 +20,8 @@ console.log(username)
             if (post) {
                 post.comments.unshift({
                     body,
-                    username,
-                    createAt: new Date().toString()
+                    username : username.userName,
+                    createdAt: new Date().toString()
                 });
 
                 await post.save();
