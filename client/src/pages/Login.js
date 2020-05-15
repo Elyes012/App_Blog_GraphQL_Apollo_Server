@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Button, Form } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import { useForm } from '../utils/hooks';
+import {AuthContext} from '../context/Auth';
 
 export default function Login(props) {
+    const context = useContext(AuthContext);
     const [errors, setErrors] = useState({})
     const { onChange, onSubmit, values } = useForm(loginUserCallback, {
         userName : '',
@@ -14,7 +16,7 @@ export default function Login(props) {
     const [loginUser, { loading }] = useMutation(LOGIN_USER, {
         update(_, result) {
             console.log('data sending to DB', result);
-            // Redirect to home page
+           context.login(result.data.login)
             props.history.push('/')
         },
         // Handel errors
