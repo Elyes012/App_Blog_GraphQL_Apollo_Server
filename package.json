@@ -9,6 +9,7 @@
   "author": "Elyes Maamouri",
   "license": "ISC",
   "dependencies": {
+    "apollo-link-context": "^1.0.20",
     "apollo-server": "^2.13.0",
     "bcryptjs": "^2.4.3",
     "graphql": "^15.0.0",
