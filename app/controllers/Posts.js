@@ -50,8 +50,11 @@ module.exports = {
       });
 console.log("newPost",newPost)
       const post = await newPost.save();
+      context.pubsub.publish('NEW_POTS', {
+        newPost : post
+      });
 
-      return post
+      return post;
     },
 
 
@@ -77,6 +80,11 @@ console.log(post)
         throw new Error(err);
       }
 
+    }
+  },
+  Subscription: {
+    newPost: {
+      subscribe:(_,__,{pubsub}) =>pubsub.asyncIterator('NEW_POST')
     }
   }
 }
